@@ -26,16 +26,63 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(callback) {
+  //console.log('in archive readListOfUrls', paths.archivedSites);
+  fs.readFile(exports.paths.list, 'utf8',function(error, data){
+      //console.log('reading inside archive sites');
+      if (error){
+        throw error;
+      }
+
+      var mydata = (data.split('\n'));
+      console.log(mydata);
+      callback(mydata);
+  });
+
 };
 
 exports.isUrlInList = function(url, callback) {
+
+  // return true if array includes url
+  console.log('inside isurl');
+  fs.readFile(exports.paths.list, 'utf8', function(error, data){
+      //console.log('reading inside archive sites');
+      if (error){
+        throw error;
+      }
+      var result = callback(data.includes(url));
+      //console.log( result);
+
+  });
+
 };
 
 exports.addUrlToList = function(url, callback) {
+  fs.writeFile(exports.paths.list, url, function(error){
+    if (error){
+      throw error;
+    }
+    callback();
+  });
+
 };
 
 exports.isUrlArchived = function(url, callback) {
+  console.log('inside archived isurl');
+  fs.readFile(exports.paths.archivedSites, 'utf8', function(error, data){
+      console.log('reading inside archive sites');
+      // if (error){
+      //   console.log('error');
+      //   throw error;
+      // }
+      console.log('before');
+      var result = callback(data.includes(url), error);
+
+
+  });
+
+
 };
 
 exports.downloadUrls = function(urls) {
+
 };
